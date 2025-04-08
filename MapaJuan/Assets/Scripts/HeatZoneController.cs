@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using static UnityEditor.Experimental.GraphView.Port;
+//using static UnityEditor.Experimental.GraphView.Port;
 
 
 [RequireComponent(typeof(RectTransform))]
@@ -28,7 +28,7 @@ public class HeatZoneController : MonoBehaviour
     }
 
 
-    [Header("Configuración ICA")]
+    [Header("Configuraciï¿½n ICA")]
     public List<AQICategory> categories = new List<AQICategory>
     {
         new AQICategory { minICA = 0, maxICA = 50, zoneColor = Color.green, zoneRadius = 2f, opacity = 0.2f  },
@@ -41,10 +41,10 @@ public class HeatZoneController : MonoBehaviour
     [Range(0, 200)] public int currentICA; //CAMBIAR JSON
     private int lastICA;
 
-    [Header("Configuración de Material")]
+    [Header("Configuraciï¿½n de Material")]
     public Material particleMaterial;
 
-    [Header("Configuración")]
+    [Header("Configuraciï¿½n")]
     public Vector2 sensorCoords; // Coordenadas GPS reales del sensor
 
     [Header("Referencias")]
@@ -93,10 +93,10 @@ public class HeatZoneController : MonoBehaviour
 
     public void UpdateSensorPosition()
     {
-        // Convertir coordenadas GPS a posición local
+        // Convertir coordenadas GPS a posiciï¿½n local
         Vector2 localPos = coordinateConverter.ZoomMapPositionParticles(sensorCoords);
 
-        // Aplicar posición al sistema de partículas
+        // Aplicar posiciï¿½n al sistema de partï¿½culas
         RectTransform particleRect = particleSystem.GetComponent<RectTransform>();
         particleRect.anchoredPosition = localPos;
 
@@ -123,14 +123,14 @@ public class HeatZoneController : MonoBehaviour
 
         if (currentCategory == null) return;
 
-        // Transición gradual de color CON opacidad
+        // Transiciï¿½n gradual de color CON opacidad
         Color currentColor = main.startColor.color;
         Color targetColorWithOpacity = currentCategory.ColorWithOpacity;
 
         Color newColor = Color.Lerp(currentColor, targetColorWithOpacity,
             Time.deltaTime * currentCategory.colorTransitionSpeed);
 
-        // Transición gradual de tamaño
+        // Transiciï¿½n gradual de tamaï¿½o
         float currentRadius = shape.radius;
         float newRadius = Mathf.Lerp(currentRadius, currentCategory.zoneRadius,
             Time.deltaTime * currentCategory.colorTransitionSpeed);
