@@ -5842,7 +5842,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   arPlaneManager: {fileID: 1066403019}
   particlePrefab: {fileID: 4791651319321441729, guid: 33af278c517b76a47b8dad9feaae26ad, type: 3}
-  panelConfirm: {fileID: 914828618}
   objectsSpawned: 0
   ICA: 0
   particleCount: 20
@@ -6630,7 +6629,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!1 &1480234321343264301
 GameObject:
   m_ObjectHideFlags: 0

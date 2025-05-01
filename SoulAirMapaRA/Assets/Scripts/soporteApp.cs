@@ -12,9 +12,9 @@ public class soporteApp : MonoBehaviour
     }
 
     // Cambiar a escena por nombre
-    public void ChangeScene()
+    public void ChangeScene(int sceneID)
     {
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene(sceneID);
     }
 
 }

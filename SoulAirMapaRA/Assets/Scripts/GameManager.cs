@@ -20,12 +20,13 @@ public class GameManager : MonoBehaviour
 
             // Actualizar el valor de referencia
             coordinateConverter.lastMapSizeNumber = coordinateConverter.sizeMap;
+            coordinateConverter.validacionLimites();
         }
     }
 
     public void actualizarPositionParticles()
     {
-        Debug.Log("Cambio de tamaño o movimiento detectado. Actualizando partículas...");
+        //Debug.Log("Cambio de tamaño o movimiento detectado. Actualizando partículas...");
 
         // Actualizar las posiciones
         foreach (HeatZoneController particle in particleList)
@@ -33,27 +34,12 @@ public class GameManager : MonoBehaviour
             if (particle != null)
             {
                 particle.UpdateSensorPosition();
-            }
-
-            if (coordinateConverter.sizeMap > 2)
-            {
                 foreach (HeatZoneController.AQICategory category in particle.categories)
                 {
-                    category.zoneRadius += 2.5f;
+                    category.zoneRadius = 3;
+                    category.zoneRadius += coordinateConverter.sizeMap - 1;
                 }
             }
-            else
-            {
-                foreach (HeatZoneController.AQICategory category in particle.categories)
-                {
-                    category.zoneRadius -= 2.5f;
-                }
-            }
-
-
         }
-
     }
-
-    
 }
