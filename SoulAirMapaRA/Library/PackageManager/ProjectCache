@@ -5,16 +5,16 @@ m_ProjectFiles:
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638798842670000000
-    m_Hash: 2614084241
+      ticks: 638817395519178877
+    m_Hash: 1147809586
   m_LockFileStatus:
     m_FilePath: C:/Users/Tipha/Documents/GitHub/SoulAir/SoulAirMapaRA/Packages/packages-lock.json
     m_PathExists: 1
     m_ContentTrackingEnabled: 1
     m_ModificationDate:
       serializedVersion: 2
-      ticks: 638798842670000000
-    m_Hash: 993201093
+      ticks: 638817395519198890
+    m_Hash: 529236761
 m_EmbeddedPackageManifests:
   m_ManifestsStatus: {}
 m_LocalPackages:
