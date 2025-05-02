@@ -2042,7 +2042,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &273985811
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8629,7 +8629,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1560237637
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10405,10 +10405,10 @@ MonoBehaviour:
     m_LineSpacing: 1
   m_Text: 'Parece que el email que ingresaste es incorrecto.
 
-    
 
-    Intentalo
-    de nuevo. '
+
+    Intentalo de
+    nuevo. '
 --- !u!222 &1932877532
 CanvasRenderer:
   m_ObjectHideFlags: 0
