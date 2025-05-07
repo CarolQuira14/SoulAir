@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using UnityEngine.XR.ARFoundation;
 using UnityEngine.XR.ARSubsystems;
 public class PmManager : MonoBehaviour
 {
+    public GameObject panelInfo;
     public GameObject objPrefab;
     private GameObject spawnedObject;
     private Pose pose;
@@ -45,6 +47,13 @@ public class PmManager : MonoBehaviour
     void PonerObjetoEnPlano()
     {
         spawnedObject = Instantiate(objPrefab, pose.position, pose.rotation);
+    }
+
+    public void AbrirInfoPM(){
+        panelInfo.SetActive(true);
+    }
+    public void CerrarInfoPM(){
+        panelInfo.SetActive(false);
     }
 
     /* public GameObject particlePrefab;

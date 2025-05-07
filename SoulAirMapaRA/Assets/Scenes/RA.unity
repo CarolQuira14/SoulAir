@@ -2194,7 +2194,7 @@ MonoBehaviour:
   useTouch: 1
   useHover: 1
   useMouse: 1
-  useSimulator: 1
+  useSimulator: 0
   disableMouseEmulation: 1
   recordFingers: 1
   recordThreshold: 5
