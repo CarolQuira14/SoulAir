@@ -3,6 +3,8 @@ using UnityEngine;
 using Firebase;
 using Firebase.Auth;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
+using System;
 
 public class FirebaseAuthManager : MonoBehaviour
 {
@@ -10,6 +12,11 @@ public class FirebaseAuthManager : MonoBehaviour
 
     public Text usernamee;
     public GameObject advertencia6letras;
+    public GameObject advertenciaVacioR,advertenciaVacioL;
+    public GameObject advertenciaWrongPassword;
+    public GameObject advertenciaInvalidEmail;
+    public GameObject principal2;
+    public GameObject iniciarSesion, registrarSesion;
 
     private FirebaseAuth auth;
     private FirebaseUser user;
@@ -40,13 +47,12 @@ public class FirebaseAuthManager : MonoBehaviour
 
         if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(username))
         {
-           
+            advertenciaVacioR.SetActive(true);
             return;
         }
 
         if (password.Length < 6)
         {
-            
             advertencia6letras.SetActive(true);
             return;
         }
@@ -57,7 +63,6 @@ public class FirebaseAuthManager : MonoBehaviour
             if (task.IsCanceled || task.IsFaulted)
             {
                 Debug.LogError("Error al registrar usuario: " + task.Exception);
-               
             }
             else
             {
@@ -66,8 +71,9 @@ public class FirebaseAuthManager : MonoBehaviour
 
                 // Actualizar el perfil del usuario con el nombre de usuario
                 UpdateUserProfile(username);
-
-                
+                Debug.Log("Registrado con exito");
+                iniciarSesion.SetActive(true);
+                registrarSesion.SetActive(false);
             }
         });
     }
@@ -91,25 +97,50 @@ public class FirebaseAuthManager : MonoBehaviour
         });
     }
 
-    public void LoginUser()
+    public async void LoginUser()
     {
-       
-        auth.SignInWithEmailAndPasswordAsync(emailLoginInput.text, passwordLoginInput.text).ContinueWith(task =>
+        if (string.IsNullOrEmpty(emailLoginInput.text) || string.IsNullOrEmpty(passwordLoginInput.text))
         {
-            if (task.IsCanceled || task.IsFaulted)
+            advertenciaVacioL.SetActive(true);
+            return;
+        }
+
+        try
+        {
+            var authResult = await auth.SignInWithEmailAndPasswordAsync(emailLoginInput.text, passwordLoginInput.text);
+            user = authResult.User;
+
+            Debug.Log("active y desactive");
+            usernamee.text = user.DisplayName;
+            Debug.Log(user.DisplayName + "hola, modificado");
+            Debug.Log("Holaaaaaaaaaaaaaaaa");
+
+            principal2.SetActive(true);
+            iniciarSesion.SetActive(false);
+        }
+        catch (FirebaseException ex)
+        {
+            AuthError errorCode = (AuthError)ex.ErrorCode;
+
+            switch (errorCode)
             {
-                Debug.LogError("Error al iniciar sesión: " + task.Exception);
-                
+                case AuthError.UserNotFound:
+                    advertenciaInvalidEmail.SetActive(true);
+                    break;
+                case AuthError.WrongPassword:
+                    advertenciaWrongPassword.SetActive(true);
+                    break;
+                default:
+                    Debug.LogWarning($"Error desconocido: {ex.Message}");
+                    break;
             }
-            else
-            {
-                AuthResult authResult = task.Result;
-                user = authResult.User;
-                Debug.Log(user.DisplayName);
-                usernamee.text =  user.DisplayName; // Mostrar el nombre de usuario
-            }
-        });
+        }
+        catch (Exception ex)
+        {
+            Debug.LogWarning($"Error inesperado: {ex.Message}");
+        }
     }
+
 
     public void LogoutUser()
     {
