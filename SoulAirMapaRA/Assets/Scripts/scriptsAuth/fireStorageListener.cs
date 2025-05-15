@@ -54,7 +54,10 @@ public class fireStorageListener : MonoBehaviour
     //    SuscribirseACambios();
 
     //}
-
+    /*public int GetIca()
+    {
+        return icaPC;
+    }*/
     void SuscribirseACambios()
     {
         DocumentReference docRefPC = db.Collection("ICA").Document("pance");
