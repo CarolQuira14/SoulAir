@@ -3942,7 +3942,6 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1116945559}
   - {fileID: 1956278109}
   - {fileID: 282266765}
   - {fileID: 795762109}
@@ -3953,6 +3952,7 @@ RectTransform:
   - {fileID: 434931615}
   - {fileID: 1281248515}
   - {fileID: 433984945}
+  - {fileID: 2138865268}
   m_Father: {fileID: 1407551893}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -9974,7 +9974,7 @@ MonoBehaviour:
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
   m_StyleSheet: {fileID: 0}
-  m_TextStyleHashCode: 0
+  m_TextStyleHashCode: -1183493901
   m_overrideHtmlColors: 0
   m_faceColor:
     serializedVersion: 2
