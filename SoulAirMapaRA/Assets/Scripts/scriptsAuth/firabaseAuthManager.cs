@@ -8,38 +8,61 @@ using System;
 
 public class FirebaseAuthManager : MonoBehaviour
 {
+
     public InputField emailInput, passwordInput, usernameInput, emailLoginInput, passwordLoginInput; // Nuevo campo para el nombre de usuario
 
-    public Text usernamee;
-    public GameObject advertencia6letras;
-    public GameObject advertenciaVacioR,advertenciaVacioL;
+    public Text usernameBienvenida, exError;
+    public GameObject advertencia6letras, shadow,confirmRegistroExitoso;
+    public GameObject advertenciaVacioR,advertenciaVacioL, errorEx;
     public GameObject advertenciaWrongPassword;
     public GameObject advertenciaInvalidEmail;
-    public GameObject principal2;
+    public GameObject principal2, principal1;
     public GameObject iniciarSesion, registrarSesion;
 
-    private FirebaseAuth auth;
+    public static FirebaseAuth auth;
     private FirebaseUser user;
 
-    void Start()
+    public static string userNameStatic, emailUserStatic;
+
+    private async void Start()
     {
-        
-        FirebaseApp.CheckAndFixDependenciesAsync().ContinueWith(task =>
+        var dependencyStatus = await FirebaseApp.CheckAndFixDependenciesAsync();
+        if (dependencyStatus == DependencyStatus.Available)
         {
-            if (task.Result == DependencyStatus.Available)
+            auth = FirebaseAuth.DefaultInstance;
+            Debug.Log("Firebase inicializado correctamente.");
+
+            user = auth.CurrentUser;
+
+            if (user != null)
             {
-                auth = FirebaseAuth.DefaultInstance;
-                Debug.Log("Firebase inicializado correctamente.");
+
+                Debug.Log("Usuario ya autenticado: " + user.Email);
+                usernameBienvenida.text = user.DisplayName;
+                guardarUsernameyCorreo(user.DisplayName, user.Email);
+
+                principal2.SetActive(true);
+                iniciarSesion.SetActive(false);
+                registrarSesion.SetActive(false);
+                principal1.SetActive(false);
+                Debug.Log("ya estoy en la linea 49");
             }
             else
             {
-                Debug.LogError("No se pudieron resolver las dependencias de Firebase. Verifica tu conexión y configuración.");
-                
+                Debug.Log("No hay usuario autenticado, mostrar pantalla de login.");
+                principal1.SetActive(true);
+                principal2.SetActive(false);
+                registrarSesion.SetActive(false);
+                iniciarSesion.SetActive(false);
             }
-        });
+        }
+        else
+        {
+            Debug.LogError("No se pudieron resolver las dependencias de Firebase.");
+        }
     }
 
-    public void RegisterUser()
+    public async void RegisterUser()
     {
         string email = emailInput.text;
         string password = passwordInput.text;
@@ -48,53 +71,54 @@ public class FirebaseAuthManager : MonoBehaviour
         if (string.IsNullOrEmpty(email) || string.IsNullOrEmpty(password) || string.IsNullOrEmpty(username))
         {
             advertenciaVacioR.SetActive(true);
+            shadow.SetActive(true);
             return;
         }
 
         if (password.Length < 6)
         {
             advertencia6letras.SetActive(true);
+            shadow.SetActive(true);
             return;
         }
 
-
-        auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWith(task =>
+        try
         {
-            if (task.IsCanceled || task.IsFaulted)
-            {
-                Debug.LogError("Error al registrar usuario: " + task.Exception);
-            }
-            else
-            {
-                AuthResult authResult = task.Result;
-                user = authResult.User;
+            var authResult = await auth.CreateUserWithEmailAndPasswordAsync(email, password);
+            user = authResult.User;
 
-                // Actualizar el perfil del usuario con el nombre de usuario
-                UpdateUserProfile(username);
-                Debug.Log("Registrado con exito");
-                iniciarSesion.SetActive(true);
-                registrarSesion.SetActive(false);
-            }
-        });
+            await UpdateUserProfile(username); // Espera a que termine la actualización del perfil
+            Debug.Log("Registrado con éxito");
+
+            confirmRegistroExitoso.SetActive(true);
+            iniciarSesion.SetActive(true);
+            registrarSesion.SetActive(false);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error al registrar usuario: " + ex.Message);
+
+            errorEx.SetActive(true);
+            shadow.SetActive(true);
+            exError.text = ex.Message;
+
+        }
     }
-
-    private void UpdateUserProfile(string username)
+    private async System.Threading.Tasks.Task UpdateUserProfile(string username)
     {
-        if (user == null) return;  // Evita que se intente actualizar sin un usuario válido.
+        if (user == null) return;
 
         UserProfile profile = new UserProfile { DisplayName = username };
 
-        user.UpdateUserProfileAsync(profile).ContinueWith(task =>
+        try
         {
-            if (task.IsCompleted)
-            {
-                Debug.Log("Nombre de usuario actualizado: " + username);
-            }
-            else
-            {
-                Debug.LogError("Error al actualizar el nombre de usuario: " + task.Exception);
-            }
-        });
+            await user.UpdateUserProfileAsync(profile);
+            Debug.Log("Nombre de usuario actualizado: " + username);
+        }
+        catch (Exception ex)
+        {
+            Debug.LogError("Error al actualizar el nombre de usuario: " + ex.Message);
+        }
     }
 
     public async void LoginUser()
@@ -110,10 +134,12 @@ public class FirebaseAuthManager : MonoBehaviour
             var authResult = await auth.SignInWithEmailAndPasswordAsync(emailLoginInput.text, passwordLoginInput.text);
             user = authResult.User;
 
-            Debug.Log("active y desactive");
-            usernamee.text = user.DisplayName;
-            Debug.Log(user.DisplayName + "hola, modificado");
+            //Debug.Log("active y desactive");
+            usernameBienvenida.text = user.DisplayName;
+            Debug.Log(user.DisplayName + " hola, bienvenido");
             Debug.Log("Holaaaaaaaaaaaaaaaa");
+
+            guardarUsernameyCorreo(user.DisplayName, user.Email);
 
             principal2.SetActive(true);
             iniciarSesion.SetActive(false);
@@ -121,6 +147,8 @@ public class FirebaseAuthManager : MonoBehaviour
         catch (FirebaseException ex)
         {
             AuthError errorCode = (AuthError)ex.ErrorCode;
+            Debug.Log(errorCode + " este es el errorcode");
+            Debug.Log(ex + " esta es la excepcion");
 
             switch (errorCode)
             {
@@ -140,10 +168,9 @@ public class FirebaseAuthManager : MonoBehaviour
             Debug.LogWarning($"Error inesperado: {ex.Message}");
         }
     }
-
-
-    public void LogoutUser()
+    public void guardarUsernameyCorreo(string username, string email)
     {
-        auth.SignOut();
+        emailUserStatic = email;
+        userNameStatic = username;
     }
 }
