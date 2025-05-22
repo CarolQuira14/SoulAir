@@ -76,3 +76,6 @@ crashlytics-build.properties
 /SoulAirMapaRA/Temp/
 /SoulAirMapaRA/Library
 /SoulAirMapaRA/Library
+/SoulAirMapaRA/.vscode
+/SoulAirMapaRA/obj
+SoulAirMapaRA/.vsconfig
