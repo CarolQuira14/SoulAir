@@ -6,9 +6,9 @@
 /[Ll]ibrary/
 /[Tt]emp/
 /[Oo]bj/
-/[Bb]uild/
-/[Bb]uilds/
-/[Ll]ogs/
+/SoulAirMapaRA//[Bb]uild/
+/SoulAirMapaRA//[Bb]uilds/
+/SoulAirMapaRA//[Ll]ogs/
 /[Uu]ser[Ss]ettings/
 *.log
 
@@ -58,21 +58,22 @@ ExportedObj/
 sysinfo.txt
 
 # Builds
-*.apk
-*.aab
+/SoulAirMapaRA/*.apk
+/SoulAirMapaRA/*.aab
 *.unitypackage
 *.unitypackage.meta
-*.app
+/SoulAirMapaRA/*.app
 
 # Crashlytics generated file
-crashlytics-build.properties
+/SoulAirMapaRA/crashlytics-build.properties
 
 # Packed Addressables
-/[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
+/SoulAirMapaRA//[Aa]ssets/[Aa]ddressable[Aa]ssets[Dd]ata/*/*.bin*
 
 # Temporary auto-generated Android Assets
-/[Aa]ssets/[Ss]treamingAssets/aa.meta
-/[Aa]ssets/[Ss]treamingAssets/aa/*
+/SoulAirMapaRA//[Aa]ssets/[Ss]treamingAssets/aa.meta
+/SoulAirMapaRA//[Aa]ssets/[Ss]treamingAssets/aa/*
 /SoulAirMapaRA/Temp/
 SoulAirMapaRA/.vscode/extensions.json
 /SoulAirMapaRA/Library/
+.vsconfig/
