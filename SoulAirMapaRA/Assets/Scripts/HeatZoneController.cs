@@ -85,9 +85,6 @@ public class HeatZoneController : MonoBehaviour
             lastICA = currentICA;
         }
 
-        
-
-
         UpdateParticleProperties();
     }
 

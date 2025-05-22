@@ -30,6 +30,7 @@ public class fireStorageListener : MonoBehaviour
         db = FirebaseFirestore.DefaultInstance;
         SuscribirseACambios();
     }
+
     /*async Task ObtenerICA()
     {
         DocumentReference docRef = db.Collection("ICA").Document(ciudad);
@@ -40,49 +41,45 @@ public class fireStorageListener : MonoBehaviour
             ultimoICA = snapshot.GetValue<int>("ICA");
             Debug.Log($"[Firestore] El ICA en {ciudad} es: {ultimoICA}");
         }
-    }*/
-    //public void escogerSensorUni()
-    //{
-    //    nombreDocumento = "univalle";
-    //    info.text = "EL ICA en el sector de Univalle es de:";
-    //    SuscribirseACambios();
-    //}
-    //public void escogerSensorPan()
-    //{
-    //    nombreDocumento = "pance";
-    //    info.text = "EL ICA en el sector de Pance es de:";
-    //    SuscribirseACambios();
+    }
+    public void escogerSensorUni()
+    {
+        nombreDocumento = "univalle";
+        info.text = "EL ICA en el sector de Univalle es de:";
+        SuscribirseACambios();
+    }
+    public void escogerSensorPan()
+    {
+        nombreDocumento = "pance";
+        info.text = "EL ICA en el sector de Pance es de:";
+        SuscribirseACambios();
 
-    //}
+    }*/
 
     void SuscribirseACambios()
     {
-        DocumentReference docRefPC = db.Collection("ICA").Document("pance");
-        DocumentReference docRefUV = db.Collection("ICA").Document("univalle");
+        DocumentReference docRefPC = db.Collection("ICA").Document("carrera125");
+        DocumentReference docRefUV = db.Collection("ICA").Document("Parcelaciones Pance");
 
+        //Sensor01
         listener = docRefPC.Listen(snapshot =>
         {
             if (snapshot.Exists)
             {
-
                 // Verificar si el campo "ICA" existe antes de obtenerlo
                 if (snapshot.ContainsField("value"))
                 {
-                    
                     int icaNuevoPC = snapshot.GetValue<int>("value");
                     latitude = snapshot.GetValue<int>("latitude");
                     longitude = snapshot.GetValue<int>("longitude");
                     hora = snapshot.GetValue<DateTime>("timestamp");  
                     nombreSensor = snapshot.GetValue<string>("name");
                     
-
-
                     if (icaNuevoPC != icaPC)
                     {
                         cambioICA = true;
                         icaPC = icaNuevoPC;
-                        Debug.Log($"[Firestore] Nuevo ICA, a las:  4/12/2025 13:15:19 PM  \n en {ciudad}, ubicado en {nombreSensor} es: {icaNuevoPC}");
-                        
+                        Debug.Log($"[Firestore] Nuevo ICA, a las:  {hora}  \n en {ciudad}, ubicado en {nombreSensor} es: {icaNuevoPC}");
                     }
                 }
                 else
@@ -97,8 +94,7 @@ public class fireStorageListener : MonoBehaviour
         });
 
 
-        //UNIVALLE LISTENER
-
+        //Sensor02
         listener = docRefUV.Listen(snapshot =>
         {
             if (snapshot.Exists)
@@ -112,13 +108,12 @@ public class fireStorageListener : MonoBehaviour
                     hora = snapshot.GetValue<DateTime>("timestamp");
                     nombreSensor = snapshot.GetValue<string>("name");
 
-                    
+
                     if (icaNuevoUV != icaUV)
                     {
                         icaUV = icaNuevoUV;
                         cambioICA = true;
-                        //airQualityCalculator.CalculateAverageICA();
-                        Debug.Log($"[Firestore] Nuevo ICA, a las:  4/12/2025 13:15:19 PM  \n en {ciudad}, ubicado en {nombreSensor} es: {icaNuevoUV}");
+                        Debug.Log($"[Firestore] Nuevo ICA, a las:  {hora} \n en {ciudad}, ubicado en {nombreSensor} es: {icaNuevoUV}");
 
                     }
                 }
@@ -132,7 +127,6 @@ public class fireStorageListener : MonoBehaviour
                 Debug.LogWarning($"[Firestore] No se encontró el documento '{ciudad}' en la colección 'value'.");
             }
         });
-
     }
 
     void OnDestroy()

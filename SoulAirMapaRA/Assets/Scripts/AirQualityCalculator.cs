@@ -40,13 +40,13 @@ public class AirQualityCalculator : MonoBehaviour
     public float darkenFactor = 0.8f; // Valor entre 0 (negro) y 1 (sin cambio)
 
 
-    private float currentAverageICA;
+    public float currentAverageICA;
 
     void Start()
     {
         // Encontrar todas las estaciones automáticamente (opcional)
         airQualityStations.AddRange(FindObjectsOfType<HeatZoneController>());
-        
+        CalculateAverageICA();
     }
 
     private Color colorDarkeness(Color color)
@@ -61,29 +61,30 @@ public class AirQualityCalculator : MonoBehaviour
 
     private void Update()
     {
-
-        
-
         if (fireStorageListener.cambioICA)
         {
             CalculateAverageICA();
         }
     }
-
-    public void CalculateAverageICA() //Actualiza el promedio cuando hay una actulizacion de los datos del ica de alguno de los sensores
+    /*Corregir la API que devuelva las coordinadas de los sensores para asi saber cual sensor del la app actulizar el ICA*/
+    //Actualiza el promedio cuando hay una actulizacion de los datos del ica de alguno de los sensores
+    public void CalculateAverageICA() 
     {
+        //Obtiene los valores del ICA de cada sensor
         icaValuePC = fireStorageListener.icaPC;
         icaValueUV = fireStorageListener.icaUV;
 
-        List<HeatZoneController> stationsInRange = new List<HeatZoneController>();
+        //Nueva lista de valores y estaciones que se actulizaron el ICA 
+        //List<HeatZoneController> stationsInRange = new List<HeatZoneController>();
         List<int> icaValues = new List<int>();
+
 
         foreach (var station in airQualityStations)
         {
             if (station == null) continue;
 
-            //Actualizacion del ica de cada sensor se usa la posicion exacta para poder identificar cual es 
-            if (station.sensorCoords == new Vector2(-76.5307f, 3.3386f)) { station.currentICA = icaValuePC; }
+            //Actualizacion del ica de cada sensor se usa la posicion exacta para poder identificar cual es (CORREGIR)
+            if (station.sensorCoords == new Vector2(-76.543f, 3.336f)) { station.currentICA = icaValuePC; }
             else { station.currentICA = icaValueUV; }
 
             // Calcular distancia geográfica entre el avatar y la estación
@@ -92,23 +93,20 @@ public class AirQualityCalculator : MonoBehaviour
                 station.sensorCoords
             );
 
-
+            //Agrega el valor del ICA si esta en el area de exposicion
             if (distance <= exposureRadius)
             {
-
-                stationsInRange.Add(station);
+                //stationsInRange.Add(station);
                 icaValues.Add(station.currentICA);
             }
-
-
         }
 
-        
-        fireStorageListener.cambioICA = false;
 
-        // Calcular promedio si hay estaciones en el rango
+        fireStorageListener.cambioICA = false;
+        // Metodo para calcular el promedio
         if (icaValues.Count > 0)
         {
+            currentAverageICA = 0;
             foreach (int ICA in icaValues)
             {
                 currentAverageICA += ICA;
@@ -125,6 +123,7 @@ public class AirQualityCalculator : MonoBehaviour
         }
     }
 
+
     // Calcula distancia entre dos puntos geográficos (simplificado)
     float CalculateGeographicDistance(Vector2 coord1, Vector2 coord2)
     {
@@ -135,7 +134,8 @@ public class AirQualityCalculator : MonoBehaviour
         );
     }
 
-    // Método para actualizar posición del avatar
+
+    // Funcion que actualiza la posición del avatar para calcular el area de exposicion
     public void UpdateAvatarPosition(Vector2 newCoords)
     {
         avatarCoords = newCoords;
@@ -143,10 +143,10 @@ public class AirQualityCalculator : MonoBehaviour
         Debug.Log("este es el valor de currentAvarageICa " + currentAverageICA);
     }
 
+    //Funcion que actuliza los colores del UI
     void UpdateRadialIndicator()
     {
         if (radialIndicator == null) return;
-        // Actualizar fill amount (0-1 basado en 0-200)
         radialIndicator.fillAmount = Mathf.Clamp01(currentAverageICA / 200f);
         switch (currentAverageICA)
         {
@@ -203,7 +203,6 @@ public class AirQualityCalculator : MonoBehaviour
                 gpsBorder.color = colorDarkeness(redColor);
                 break;
         }
-        // Opcional: Efecto de transición suave
         radialIndicator.CrossFadeColor(radialIndicator.color, 0.5f, true, true);
     }
 

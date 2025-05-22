@@ -31,6 +31,10 @@ public class CoordinateConverter : MonoBehaviour
 
     private float resultvalidation;
 
+    // Dimensiones base del mapa cuando el zoom es 1.0
+    private const float baseMapWidth = 720f;
+    private const float baseMapHeight = 1280f;
+
     void Start()
     {
         InitializeZoomSlider();
@@ -86,6 +90,25 @@ public class CoordinateConverter : MonoBehaviour
             yNormalized * currentHeight - currentHeight * 0.5f
         );
         return localPosition;
+    }
+
+    public Vector2 ConvertUnscaledPixelsToCurrentPixels(Vector2 unscaledPixelPosition)
+    {
+        // 1. Convertir la posición en píxeles sin escalar a coordenadas geográficas.
+        //    Usamos las dimensiones base (720x1280) como referencia para la normalización.
+        float xNormalized_unscaled = (unscaledPixelPosition.x + baseMapWidth * 0.5f) / baseMapWidth;
+        float yNormalized_unscaled = (unscaledPixelPosition.y + baseMapHeight * 0.5f) / baseMapHeight;
+
+        Vector2 geoCoords = new Vector2(
+            Mathf.Lerp(minCoords.x, maxCoords.x, xNormalized_unscaled),
+            Mathf.Lerp(minCoords.y, maxCoords.y, yNormalized_unscaled)
+        );
+
+        // 2. Convertir las coordenadas geográficas obtenidas a una posición en píxeles
+        //    relativa al centro del RectTransform actual. Usamos la función existente.
+        Vector2 currentPixelPosition = ConvertCoordinatestoPixels(geoCoords);
+
+        return currentPixelPosition;
     }
 
     //Calcula las coordenadas del ZoomMapa
