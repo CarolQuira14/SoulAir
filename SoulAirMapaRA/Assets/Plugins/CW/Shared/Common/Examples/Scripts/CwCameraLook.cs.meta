@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:SoulAirMapaRA/Assets/Plugins/CW/Shared/Common/Examples/Scripts/CwCameraLook.cs.meta
 guid: 8f6d5316b170fe34e886c05572b3006e
+========
+guid: 3fb3befea3a95e040a20e8d21b9f2a16
+>>>>>>>> MapaParaMerge:SoulAirMapaRA/Assets/Scripts/HereTrafficAPI.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

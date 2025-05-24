@@ -75,7 +75,6 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 /SoulAirMapaRA/Temp/
 /SoulAirMapaRA/Library
-/SoulAirMapaRA/Library
 /SoulAirMapaRA/.vscode
 /SoulAirMapaRA/obj
 SoulAirMapaRA/.vsconfig

@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 
 public class soporteApp : MonoBehaviour
 {
+    [Header("NumeroEscena")]
     public string sceneName;
     public void AbrirSoportePorCorreo()
     {

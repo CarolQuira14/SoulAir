@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:SoulAirMapaRA/Assets/Plugins/CW/Shared/Common/Examples/Scripts/CwCameraMove.cs.meta
 guid: 4cabc7c514a17ca41a6c62cc43dcb94d
+========
+guid: a886b4af4ab3eb543aff0f9ae552ce50
+>>>>>>>> MapaParaMerge:SoulAirMapaRA/Assets/UI/PopUp/PopUpControl.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2

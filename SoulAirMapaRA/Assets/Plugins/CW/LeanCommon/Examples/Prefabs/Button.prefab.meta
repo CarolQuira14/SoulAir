@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:SoulAirMapaRA/Assets/Plugins/CW/LeanCommon/Examples/Prefabs/Button.prefab.meta
 guid: e397534993a3daa4fb62356a2b6e1856
+========
+guid: f70603a97cb4fed4ebda9e66772d9354
+>>>>>>>> MapaParaMerge:SoulAirMapaRA/Assets/Prefabs/Button.prefab.meta
 PrefabImporter:
   externalObjects: {}
   userData: 

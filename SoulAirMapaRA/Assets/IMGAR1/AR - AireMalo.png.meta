@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:SoulAirMapaRA/Assets/IMGAR1/AR - AireMalo.png.meta
 guid: d3d1f62705e70f64a89de9f9aa2bc18c
+========
+guid: 90123807b53da6b4b8ccec08a0e5d35f
+>>>>>>>> MapaParaMerge:SoulAirMapaRA/Assets/UI/PopUp/Factores Tutorial (1).png.meta
 TextureImporter:
   internalIDToNameTable: []
   externalObjects: {}

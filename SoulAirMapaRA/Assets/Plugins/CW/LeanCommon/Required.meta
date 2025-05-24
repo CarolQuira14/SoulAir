@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:SoulAirMapaRA/Assets/Plugins/CW/LeanCommon/Required.meta
 guid: eca036dcb74c24e4687c45ba0c2d2983
+========
+guid: eeddf9ee1ab1e88428d1159a1f68c2e0
+>>>>>>>> MapaParaMerge:SoulAirMapaRA/Assets/UI/AudioMapa.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
