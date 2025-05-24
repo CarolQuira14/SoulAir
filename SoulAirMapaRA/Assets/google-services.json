@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "785024790801",
+    "project_id": "demomapasoulair",
+    "storage_bucket": "demomapasoulair.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:785024790801:android:91867f6fa46d1fec991cb0",
+        "android_client_info": {
+          "package_name": "com.DefaultCompany.SoulAir"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCOIzP51NB5Pxye2kHbDH-aN_MUTiSGubs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

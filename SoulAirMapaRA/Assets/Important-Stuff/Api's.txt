@@ -1,0 +1,5 @@
+ID del proyecto en Firabase: soulair-dc143
+Token para el api de aqi: 4dbc5b687587df72e35cbb96a11571bddcea856f
+Con este link podemos conocer el id de todas las estaciones que hay en cali: https://api.waqi.info/search/?token=4dbc5b687587df72e35cbb96a11571bddcea856f&keyword=cali
+build command del servidor: yarn
+start command del servidor: yarn start
