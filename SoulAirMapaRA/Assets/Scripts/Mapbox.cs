@@ -7,34 +7,32 @@ using System.Globalization;
 public class Mapbox : MonoBehaviour
 {
     //Variables para modificar el mapa desde el inspector 
-    public string accessToken;
+    //Longitud del Mapa
     public float minLatitude = 3.3109f;
     public float minLongitude = -76.5533f;
     public float maxLatitude = 3.3977f;
     public float maxLongitude = -76.4921f;
-
-
-    public Vector2 currentGPS = new Vector2(-76.52081f, 3.35117f); // [lon, lat]
-    public string avatarUrl;
-
-
+    // [GPS]
+    public Vector2 currentGPS = new Vector2(-76.52081f, 3.35117f);
     //Estilos del Mapa desde el inspector
     public enum style { Light, Dark, Streets, Outdoors, Satellite, SatelliteStreets };
     public style mapStyle = style.Streets;
-
+    private string[] styleStr = new string[] { "light-v10", "dark-v10", "streets-v12", "outdoors-v11", "satellite-v9", "satellite-streets-v11" };
     //Resolucion del mapa desde el inspector
     public enum resolution { low = 1, high = 2 };
     public resolution mapResolution = resolution.high;
-
-    //Control and Set the map and the execution 
+    // Aspecto resolution del mapa
     private int mapWidth = 720;
     private int mapHeight = 1280;
-    private string[] styleStr = new string[] { "light-v10", "dark-v10", "streets-v12", "outdoors-v11", "satellite-v9", "satellite-streets-v11" };
+    //API Mapbox
     private string url = "";
-    public bool mapIsLoading = false;
-    private Rect rect;
-    private bool updateMap = true;
+    private string accessToken = "pk.eyJ1IjoianVhbnZlbGV6IiwiYSI6ImNtOHk0d3V3ZjBicG0ybHExYnl2bzNpODYifQ.whPy355uhUjIwxJb2JpRLQ";
+    private string avatarUrl = "https://img.icons8.com/?size=200&id=23242&format=png";
 
+
+    //Variables de control
+    public bool mapIsLoading = false;
+    private bool updateMap = true;
     //Datos anteriores guardados
     private string accessTokenLast;
     private float minLatitudeLast = 3.3109f;
@@ -45,21 +43,13 @@ public class Mapbox : MonoBehaviour
     private resolution mapResolutionLast = resolution.high;
 
 
-
-
-
     void Start()
     {
-        //Tamaño de la imagen
-        rect = gameObject.GetComponent<RawImage>().rectTransform.rect;
         StartCoroutine(GetMapbox());
     }
 
     void Update()
     {
-        
-
-        
         if (updateMap && (accessTokenLast != accessToken ||
             !Mathf.Approximately(minLatitudeLast, minLatitude) ||
             !Mathf.Approximately(minLongitudeLast, minLongitude) ||
@@ -70,19 +60,9 @@ public class Mapbox : MonoBehaviour
         {
             StartCoroutine(GetMapbox());
             updateMap = false;
-            
-
         }
     }
-    
 
-    private bool IsWithinCoverageArea(Vector2 coordinates)
-    {
-        return coordinates.x >= minLongitude &&
-               coordinates.x <= maxLongitude &&
-               coordinates.y >= minLatitude &&
-               coordinates.y <= maxLatitude;
-    }
 
     //Consulta a la API
     IEnumerator GetMapbox()
@@ -93,18 +73,15 @@ public class Mapbox : MonoBehaviour
             Debug.LogWarning("¡Estás por fuera de la zona de cobertura!");
 
         }
-        
+
 
         string encodedAvatarUrl = UnityWebRequest.EscapeURL(avatarUrl);
         string avatar = $"url-{encodedAvatarUrl}({currentGPS.x.ToString(CultureInfo.InvariantCulture)},{currentGPS.y.ToString(CultureInfo.InvariantCulture)})";
-
-
 
         string bbox = $"{minLongitude.ToString(CultureInfo.InvariantCulture)}," +
               $"{minLatitude.ToString(CultureInfo.InvariantCulture)}," +
               $"{maxLongitude.ToString(CultureInfo.InvariantCulture)}," +
               $"{maxLatitude.ToString(CultureInfo.InvariantCulture)}";
-
 
         url = "https://api.mapbox.com/styles/v1/mapbox/" + styleStr[(int)mapStyle] +
               "/static/" + $"{avatar}/" + $"[{bbox}]" + "/" +
@@ -117,7 +94,7 @@ public class Mapbox : MonoBehaviour
         Debug.Log("Requesting map: " + url); // Para depuración
 
         mapIsLoading = true;
- 
+
         UnityWebRequest www = UnityWebRequestTexture.GetTexture(url);
         yield return www.SendWebRequest();
 
@@ -131,7 +108,6 @@ public class Mapbox : MonoBehaviour
         else
         {
             mapIsLoading = false;
-
             gameObject.GetComponent<RawImage>().texture = ((DownloadHandlerTexture)www.downloadHandler).texture;
             minLatitudeLast = minLatitude;
             maxLatitudeLast = maxLatitude;
@@ -145,6 +121,11 @@ public class Mapbox : MonoBehaviour
         }
     }
 
-
-    
+    private bool IsWithinCoverageArea(Vector2 coordinates)
+    {
+        return coordinates.x >= minLongitude &&
+               coordinates.x <= maxLongitude &&
+               coordinates.y >= minLatitude &&
+               coordinates.y <= maxLatitude;
+    }
 }

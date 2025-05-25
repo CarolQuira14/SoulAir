@@ -1,0 +1,29 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:SoulAirMapaRA/Assets/TextMesh Pro/Fonts/Montserrat-Black.ttf.meta
+guid: 20be277b3f331b04e87a3b5fdf3a84cf
+========
+guid: c08c1299b6cfb7649959a6fb39b692b3
+>>>>>>>> MapaParaMerge:SoulAirMapaRA/Assets/UI/Insanibu.ttf.meta
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontNames:
+<<<<<<<< HEAD:SoulAirMapaRA/Assets/TextMesh Pro/Fonts/Montserrat-Black.ttf.meta
+  - Montserrat
+========
+  - Insaniburger
+>>>>>>>> MapaParaMerge:SoulAirMapaRA/Assets/UI/Insanibu.ttf.meta
+  fallbackFontReferences: []
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -74,6 +74,7 @@ sysinfo.txt
 /SoulAirMapaRA//[Aa]ssets/[Ss]treamingAssets/aa.meta
 /SoulAirMapaRA//[Aa]ssets/[Ss]treamingAssets/aa/*
 /SoulAirMapaRA/Temp/
-SoulAirMapaRA/.vscode/extensions.json
-/SoulAirMapaRA/Library/
-.vsconfig/
+/SoulAirMapaRA/Library
+/SoulAirMapaRA/.vscode
+/SoulAirMapaRA/obj
+SoulAirMapaRA/.vsconfig

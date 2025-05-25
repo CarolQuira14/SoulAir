@@ -11,6 +11,7 @@ public class movementMapaNuevo : MonoBehaviour, IPointerClickHandler
     public void OnPointerClick(PointerEventData eventData)
     {
         gameObject.SetActive(false);
+        //Desactivarlos
 
     }
 }

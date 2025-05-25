@@ -25,7 +25,7 @@ public class Movement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        Debug.Log($"Funciono {mapRectTransform.rect.size}");
+        //Debug.Log($"Funciono {mapRectTransform.rect.size}");
         if (/*Input.touchCount == 1&&*/ mapRectTransform.rect.size != originalSize) // Solo mover con un dedo
         {
 
@@ -51,7 +51,7 @@ public class Movement : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDrag
     {
         if (isDragging)
         {
-            Debug.Log("Dejo de Funcionar");
+            //Debug.Log("Dejo de Funcionar");
             isDragging = false;
             size.updateZoomMap(true);
 

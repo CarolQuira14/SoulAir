@@ -12,8 +12,7 @@ public class InicializarObjetos : MonoBehaviour
     [SerializeField] private ARPlaneManager arPlaneManager;
     //[SerializeField] private GameObject factoryPrefab;
     [SerializeField] private GameObject particlePrefab;
-    //[SerializeField] private GameObject carPrefab;
-    [SerializeField] private GameObject panelConfirm;
+
    
     public bool objectsSpawned=false;
     //public int numberOfObjects = 5;
@@ -46,25 +45,23 @@ public class InicializarObjetos : MonoBehaviour
         {
             planes.AddRange(planeData.added);
         }
-
-        if (!objectsSpawned)  // Solo instanciar objetos si no se han instanciado antes
-        {
             foreach (var plane in planes)
             {
                 if (plane.extents.x * plane.extents.y >= 0.5f)
                 {
-                    Vector3 randomPositionOnPlane = GetRandomPositionOnPlane(plane);
+                    for (int i = 0; i < particleCount; i++)
+                    {
+                        Vector3 randomPosition = GetRandomPositionOnPlane(plane);
+                        Instantiate(particlePrefab, randomPosition, Quaternion.identity);
+                    }
 
                     // Instanciar el prefab de la particula en la posici�n aleatoria
                     SpawnParticlesAroundCamera();
-
                     objectsSpawned = true;
                     //StopPlaneDetection(); // Detener la detecci�n de planos una vez instanciado
-                    panelConfirm.SetActive(true);
-                    break;  // Detener el loop despu�s de instanciar el objeto
+                    break;  
                 }
             }
-        }
     }
 
     // Genera una posici�n aleatoria en el plano dado
@@ -84,6 +81,7 @@ public class InicializarObjetos : MonoBehaviour
         }
         
     }
+
     /*void OnPlanesChanged(ARPlanesChangedEventArgs args)
     {
         // Solo proceder si se han a�adido nuevos planos

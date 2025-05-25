@@ -33,8 +33,8 @@ public class HeatZoneController : MonoBehaviour
     {
         new AQICategory { minICA = 0, maxICA = 50, zoneColor = Color.green, zoneRadius = 2f, opacity = 0.2f  },
         new AQICategory { minICA = 51, maxICA = 100, zoneColor = Color.yellow, zoneRadius = 2f, opacity = 0.3f },
-        new AQICategory { minICA = 101, maxICA = 150, zoneColor = new Color(1f, 0.5f, 0f), zoneRadius = 3f, opacity = 0.4f },
-        new AQICategory { minICA = 151, maxICA = 200, zoneColor = Color.red, zoneRadius = 3f, opacity = 0.5f }
+        new AQICategory { minICA = 101, maxICA = 150, zoneColor = new Color(1f, 0.5f, 0f), zoneRadius = 2f, opacity = 0.4f },
+        new AQICategory { minICA = 151, maxICA = 200, zoneColor = Color.red, zoneRadius = 2f, opacity = 0.5f }
     };
 
     [Header("Control ICA")]
@@ -85,9 +85,6 @@ public class HeatZoneController : MonoBehaviour
             lastICA = currentICA;
         }
 
-        
-
-
         UpdateParticleProperties();
     }
 
@@ -100,7 +97,7 @@ public class HeatZoneController : MonoBehaviour
         RectTransform particleRect = particleSystem.GetComponent<RectTransform>();
         particleRect.anchoredPosition = localPos;
 
-        Debug.Log($"Sensor en {sensorCoords} posicionado en {localPos}");
+        //Debug.Log($"Sensor en {sensorCoords} posicionado en {localPos}");
     }
 
     void UpdateTargetValues()
