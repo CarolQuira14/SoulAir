@@ -56,6 +56,7 @@ public class AirQualityCalculator : MonoBehaviour
     private PopUpControlEsc_1 mensajeScript;
 
     public float currentAverageICA;
+    private bool x = false;
 
     void Start()
     {
@@ -302,6 +303,11 @@ public class AirQualityCalculator : MonoBehaviour
                 circleBorder.color = colorDarkeness(greenColor);
                 gpsBorder.color = colorDarkeness(greenColor);
                 FindAndInstantiate("avatarInicial");
+                if (x)
+                {
+                    StartCoroutine(InstanciarPopUpAvatar(popUpBueno));
+                }
+                x = true;
                 break;
             case <= 100:
                 radialIndicator.color = yellowColor;
@@ -316,7 +322,7 @@ public class AirQualityCalculator : MonoBehaviour
                 circleBorder.color = colorDarkeness(yellowColor);
                 gpsBorder.color = colorDarkeness(yellowColor);
                 FindAndInstantiate("avatarAmarillo");
-                StartCoroutine(InstanciarPopUpAvatar(popUpBueno));
+                StartCoroutine(InstanciarPopUpAvatar(popUpMalo));
                 
                 break;
             case <= 150:
@@ -332,6 +338,7 @@ public class AirQualityCalculator : MonoBehaviour
                 circleBorder.color = colorDarkeness(orangeColor);
                 gpsBorder.color = colorDarkeness(orangeColor);
                 FindAndInstantiate("avatarNaranja");
+                
                 break;
             default:
                 radialIndicator.color = redColor;
