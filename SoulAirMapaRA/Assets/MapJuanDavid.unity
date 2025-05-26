@@ -4537,7 +4537,7 @@ MonoBehaviour:
   redColor: {r: 0.8, g: 0.2, b: 0.2, a: 1}
   darkenFactor: 0.8
   popUpBueno: {fileID: 4262459813714540994, guid: 910f9f2dc8445d64ea64f83b657d8fe6, type: 3}
-  popUpMalo: {fileID: 4262459813714540994, guid: 910f9f2dc8445d64ea64f83b657d8fe6, type: 3}
+  popUpMalo: {fileID: 2308327027001313206, guid: 4daf0042b9cf63148ad51b8c361e4532, type: 3}
   currentAverageICA: 0
 --- !u!114 &1139653397
 MonoBehaviour:
