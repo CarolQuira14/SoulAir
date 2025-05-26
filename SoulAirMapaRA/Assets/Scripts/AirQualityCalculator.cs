@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -5,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
+using static UnityEngine.Rendering.DebugUI;
 using Image = UnityEngine.UI.Image;
 
 public class AirQualityCalculator : MonoBehaviour
@@ -48,6 +50,10 @@ public class AirQualityCalculator : MonoBehaviour
     public Color redColor = new Color(0.8f, 0.2f, 0.2f, 1f);
     public float darkenFactor = 0.8f; // Valor entre 0 (negro) y 1 (sin cambio)
 
+    public GameObject popUpBueno;
+    public GameObject popUpMalo;
+    private GameObject panel;
+    private PopUpControlEsc_1 mensajeScript;
 
     public float currentAverageICA;
 
@@ -67,6 +73,56 @@ public class AirQualityCalculator : MonoBehaviour
         color.a);
         return darkenedColor;
     }
+
+    public IEnumerator InstanciarPopUpAvatar(GameObject mensaje)
+    {
+        yield return new WaitForSeconds(2f);
+        GameObject avatarMensaje = GameObject.FindGameObjectWithTag("Avatar");
+        Debug.LogWarning("Mostrando PopUp Avatar: ");
+
+        GameObject instantiatedObject = null; // Track the instantiated object
+
+        if (avatarMensaje != null)
+        {
+            Debug.LogWarning("Entre 01");
+            if (mensaje != null)
+            {
+                Debug.LogWarning("Entre 02");
+                panel = GameObject.FindGameObjectWithTag("PopUpAvatar");
+                if (panel.transform != null)
+                {
+                    Debug.LogWarning("Entre 03");
+                    instantiatedObject = Instantiate(mensaje);
+                    instantiatedObject.transform.SetParent(panel.transform, false);
+                    mensajeScript = instantiatedObject.GetComponent<PopUpControlEsc_1>();
+
+                    if (mensajeScript != null)
+                    {
+                        Debug.LogWarning("Entre 03");
+                        mensajeScript.ShowPopUp();
+                    }
+                }
+            }
+        }
+        else
+        {
+            Debug.LogWarning("No Funciona");
+        }
+
+        yield return new WaitForSeconds(5f);
+        if (mensajeScript != null)
+        {
+            mensajeScript.HidePopUp();
+        }
+
+        yield return new WaitForSeconds(2f);
+        if (instantiatedObject != null)
+        {
+            Destroy(instantiatedObject); // Destroy the instance, not the prefab
+        }
+    }
+
+
 
     private GameObject FindGameObjectByExactName(string objectName)
     {
@@ -260,6 +316,8 @@ public class AirQualityCalculator : MonoBehaviour
                 circleBorder.color = colorDarkeness(yellowColor);
                 gpsBorder.color = colorDarkeness(yellowColor);
                 FindAndInstantiate("avatarAmarillo");
+                StartCoroutine(InstanciarPopUpAvatar(popUpBueno));
+                
                 break;
             case <= 150:
                 radialIndicator.color = orangeColor;
