@@ -12,7 +12,7 @@ EditorBuildSettings:
     path: Assets/MapJuanDavid.unity
     guid: 04c7c40c02ffffa40bb4daf7f91555d5
   - enabled: 1
-    path: Assets/Scenes/RA.unity
+    path: Assets/RA/RA.unity
     guid: ba90bee1e6956ee42ab35277259c66b1
   - enabled: 1
     path: Assets/Scenes/perfil.unity
