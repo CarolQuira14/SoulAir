@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Foco
   - PopUpInfo
+  - Avatar
   layers:
   - Default
   - TransparentFX

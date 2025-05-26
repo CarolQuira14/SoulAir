@@ -84,7 +84,7 @@ public class Mapbox : MonoBehaviour
               $"{maxLatitude.ToString(CultureInfo.InvariantCulture)}";
 
         url = "https://api.mapbox.com/styles/v1/mapbox/" + styleStr[(int)mapStyle] +
-              "/static/" + $"{avatar}/" + $"[{bbox}]" + "/" +
+              "/static/" + $"[{bbox}]" + "/" +
               mapWidth + "x" + mapHeight +
               (mapResolution == resolution.high ? "@2x" : "") +
               "?access_token=" + accessToken +

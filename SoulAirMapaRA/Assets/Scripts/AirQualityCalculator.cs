@@ -1,15 +1,24 @@
-using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using TMPro;
+using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.UIElements;
 using Image = UnityEngine.UI.Image;
 
 public class AirQualityCalculator : MonoBehaviour
 {
-    [Header("Configuración")]
+    [Header("Avatar")]
     public Vector2 avatarCoords = new Vector2(-76.52081f, 3.35117f);
+    [Tooltip("Contenedor donde se instanciarán el avatar")]
+    public Transform mapboxContainer;
+    [SerializeField] private List<GameObject> avatars = new List<GameObject>();
+
+    [Header("Referencias")]
+    public CoordinateConverter coordinateConverter;
+
+    [Header("Configuración")]
     public float exposureRadius = 0.012f; // Radio en grados geográficos
     public TMP_Text updateInterval; // Cada cuánto se actualiza el cálculo
     public int icaValuePC;
@@ -57,6 +66,79 @@ public class AirQualityCalculator : MonoBehaviour
         color.b * darkenFactor,
         color.a);
         return darkenedColor;
+    }
+
+    private GameObject FindGameObjectByExactName(string objectName)
+    {
+        // Validar que el nombre no esté vacío o nulo
+        if (string.IsNullOrEmpty(objectName))
+        {
+            Debug.LogWarning("El nombre proporcionado está vacío o es nulo");
+            return null;
+        }
+
+        // Iterar a través de la lista de GameObjects
+        for (int i = 0; i < avatars.Count; i++)
+        {
+            // Verificar que el GameObject no sea nulo
+            if (avatars[i] != null)
+            {
+                // Comparar el nombre del GameObject con el nombre buscado
+                if (avatars[i].name.Equals(objectName))
+                {
+                    Debug.Log($"GameObject '{objectName}' encontrado en el índice {i}");
+                    return avatars[i];
+                }
+            }
+        }
+
+        // Si llegamos aquí, el GameObject no fue encontrado
+        Debug.LogWarning($"GameObject con nombre '{objectName}' no encontrado en la lista");
+        return null;
+    }
+
+    public void FindAndInstantiate(string objectName)
+    {
+        // Paso 1: Buscar el GameObject en la lista
+        GameObject prefabToInstantiate = FindGameObjectByExactName(objectName);
+        // Paso 2: Verificar si se encontró el GameObject
+        if (prefabToInstantiate == null)
+        {
+            Debug.LogError($"No se puede instanciar '{objectName}' porque no se encontró en la lista");
+        }
+        // Paso 3: Instanciar el GameObject
+        GameObject instantiatedObject;
+
+        try
+        {
+            // Instanciar el objeto
+            instantiatedObject = Instantiate(prefabToInstantiate, mapboxContainer);
+            RectTransform avatarTransform = instantiatedObject.GetComponent<RectTransform>();
+            Vector2 localPosAvatar = coordinateConverter.ConvertCoordinatestoPixels(avatarCoords);
+            avatarTransform.anchoredPosition += localPosAvatar;
+            Debug.Log($"GameObject '{objectName}' instanciado exitosamente en posición {localPosAvatar}");
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error al instanciar '{objectName}': {e.Message}");
+        }
+    }
+
+    public void RemoveAvatar()
+    {
+        // Buscar el GameObject en la lista
+        GameObject avatarToRemove = GameObject.FindGameObjectWithTag("Avatar"); 
+        // Verificar si se encontró el GameObject
+        if (avatarToRemove != null)
+        {
+            // Destruir el GameObject
+            Destroy(avatarToRemove);
+            Debug.Log("Avartar eliminado exitosamente");
+        }
+        else
+        {
+            Debug.LogWarning("No se pudo eliminar el avatar porque no se encontró");
+        }
     }
 
     private void Update()
@@ -113,6 +195,7 @@ public class AirQualityCalculator : MonoBehaviour
             }
             currentAverageICA = currentAverageICA / icaValues.Count;
             updateInterval.text = currentAverageICA.ToString();
+            RemoveAvatar();
             UpdateRadialIndicator();
             Debug.Log($"ICA Promedio: {currentAverageICA} (Estaciones: {icaValues.Count})");
         }
@@ -162,6 +245,7 @@ public class AirQualityCalculator : MonoBehaviour
                 camaraBorder.color = colorDarkeness(greenColor);
                 circleBorder.color = colorDarkeness(greenColor);
                 gpsBorder.color = colorDarkeness(greenColor);
+                FindAndInstantiate("avatarInicial");
                 break;
             case <= 100:
                 radialIndicator.color = yellowColor;
@@ -175,6 +259,7 @@ public class AirQualityCalculator : MonoBehaviour
                 camaraBorder.color = colorDarkeness(yellowColor);
                 circleBorder.color = colorDarkeness(yellowColor);
                 gpsBorder.color = colorDarkeness(yellowColor);
+                FindAndInstantiate("avatarAmarillo");
                 break;
             case <= 150:
                 radialIndicator.color = orangeColor;
@@ -188,6 +273,7 @@ public class AirQualityCalculator : MonoBehaviour
                 camaraBorder.color = colorDarkeness(orangeColor);
                 circleBorder.color = colorDarkeness(orangeColor);
                 gpsBorder.color = colorDarkeness(orangeColor);
+                FindAndInstantiate("avatarNaranja");
                 break;
             default:
                 radialIndicator.color = redColor;
@@ -201,6 +287,7 @@ public class AirQualityCalculator : MonoBehaviour
                 camaraBorder.color = colorDarkeness(redColor);
                 circleBorder.color = colorDarkeness(redColor);
                 gpsBorder.color = colorDarkeness(redColor);
+                FindAndInstantiate("avatarRojo");
                 break;
         }
         radialIndicator.CrossFadeColor(radialIndicator.color, 0.5f, true, true);

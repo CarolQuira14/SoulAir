@@ -131,14 +131,14 @@ MonoBehaviour:
   m_GameObject: {fileID: 7904823605088125696}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 59d087f12292f334f9dbe9b58de17084, type: 3}
+  m_Script: {fileID: 11500000, guid: 4dedbb33d9bb73d479a06602145fd2fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   childButton: {fileID: 8900423499153142269}
   prefabToInstantiate: {fileID: 1719040864228228348, guid: 777d3adc3c5b1d142b83aa319015bf0a, type: 3}
   objetoAnimator: {fileID: 0}
   parentTransformMapbox: {fileID: 0}
-  posicion: {x: 0, y: 0, z: 0}
+  posicionesOriginalFoco: {x: 0, y: 0}
 --- !u!95 &1036463116998966838
 Animator:
   serializedVersion: 5
@@ -149,7 +149,7 @@ Animator:
   m_GameObject: {fileID: 7904823605088125696}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: dfa36b66d639c0a42851e9a16b3f8d7d, type: 2}
+  m_Controller: {fileID: 9100000, guid: 1b4883bc81964c24ebef17a4a2ee9251, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0

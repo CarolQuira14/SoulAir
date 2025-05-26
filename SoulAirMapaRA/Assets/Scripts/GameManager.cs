@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public HereTrafficAPI segmentosTrafico;
     public List<HeatZoneController> particleList = new List<HeatZoneController>();
     public GameObject[] focos;
+    public GameObject avatar;
 
     //Funcion que detecta cuando el mapa ha cambiado de tamaño 
     void Update()
@@ -21,6 +22,7 @@ public class GameManager : MonoBehaviour
             segmentosTrafico.UpdatePosition(coordinateConverter.sizeMap);
             
             focos = (GameObject.FindGameObjectsWithTag("Foco"));
+            avatar = GameObject.FindGameObjectWithTag("Avatar");
             actualizarPositionFocos();
             UpdateSize(coordinateConverter.sizeMap);
         }
@@ -53,6 +55,10 @@ public class GameManager : MonoBehaviour
             Vector2 positionNew = coordinateConverter.ConvertUnscaledPixelsToCurrentPixels(positionVectorFoco);
             transform.anchoredPosition = new Vector3(positionNew.x, positionNew.y, 0);
         }
+
+        RectTransform avatarTransform = avatar.GetComponent<RectTransform>();
+        Vector2 avatarPosition = coordinateConverter.ConvertUnscaledPixelsToCurrentPixels(new Vector2(-76.52081f, 3.35117f)); // Asumiendo que el avatar está en el centro del mapa
+        avatarTransform.anchoredPosition = new Vector3(avatarPosition.x, avatarPosition.y, 0);
     }
 
     public void UpdateSize(float size)
@@ -66,6 +72,11 @@ public class GameManager : MonoBehaviour
             transform.localScale = newSize;
             
         }
+
+        RectTransform avatarTransform = avatar.GetComponent<RectTransform>();
+        Vector3 originalSizeAvatar = new Vector3(1f, 1f, 0);
+        Vector3 newSizeAvatar = originalSizeAvatar * (size - 0.8f);
+        avatarTransform.localScale = newSizeAvatar;
     }
 
     
