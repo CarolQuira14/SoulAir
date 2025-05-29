@@ -138,7 +138,7 @@ public class CoordinateConverter : MonoBehaviour
         if (sizeMap != lastMapSizeNumber || move)
         {
             CalculateVisibleBoundingBox(out visibleMin, out visibleMax);
-            mapaZoom.SetActive(true);
+            //mapaZoom.SetActive(true);
             //Activacion de la funcion que coloca los focos en frente
             mapBoxZoom.minLatitude = visibleMin.y;
             mapBoxZoom.maxLatitude = visibleMax.y;

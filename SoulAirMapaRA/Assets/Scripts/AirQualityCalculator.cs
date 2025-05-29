@@ -38,11 +38,13 @@ public class AirQualityCalculator : MonoBehaviour
     public Image circle;
     public Image gps;
     public Image slider;
+    public Image HD;
 
     public Image avatarBorder;
     public Image camaraBorder;
     public Image circleBorder;
     public Image gpsBorder;
+    public Image HDBorder;
 
     public Color greenColor = new Color(0.2f, 0.8f, 0.2f, 1f);
     public Color yellowColor = new Color(0.8f, 0.8f, 0.2f, 1f);
@@ -52,11 +54,13 @@ public class AirQualityCalculator : MonoBehaviour
 
     public GameObject popUpBueno;
     public GameObject popUpMalo;
+    public GameObject popUpMalo02;
     private GameObject panel;
     private PopUpControlEsc_1 mensajeScript;
 
     public float currentAverageICA;
     private bool x = false;
+    public GameObject avatarUI;
 
     void Start()
     {
@@ -298,10 +302,13 @@ public class AirQualityCalculator : MonoBehaviour
                 camara.color = greenColor;
                 gps.color = greenColor;
                 slider.color = greenColor;
+                HD.color = greenColor;
                 avatarBorder.color = colorDarkeness(greenColor);
                 camaraBorder.color = colorDarkeness(greenColor);
                 circleBorder.color = colorDarkeness(greenColor);
                 gpsBorder.color = colorDarkeness(greenColor);
+                HDBorder.color = colorDarkeness(greenColor);
+                avatarUI.SetActive(false);
                 FindAndInstantiate("avatarInicial");
                 if (x)
                 {
@@ -317,13 +324,17 @@ public class AirQualityCalculator : MonoBehaviour
                 camara.color = yellowColor;
                 gps.color = yellowColor;
                 slider.color = yellowColor;
+                HD.color = yellowColor;
                 avatarBorder.color = colorDarkeness(yellowColor);
                 camaraBorder.color = colorDarkeness(yellowColor);
                 circleBorder.color = colorDarkeness(yellowColor);
                 gpsBorder.color = colorDarkeness(yellowColor);
+                HDBorder.color = colorDarkeness(yellowColor);
+                avatarUI.SetActive(true);
                 FindAndInstantiate("avatarAmarillo");
                 StartCoroutine(InstanciarPopUpAvatar(popUpMalo));
-                
+                StartCoroutine(InstanciarPopUpAvatar(popUpMalo02));
+
                 break;
             case <= 150:
                 radialIndicator.color = orangeColor;
@@ -333,10 +344,12 @@ public class AirQualityCalculator : MonoBehaviour
                 camara.color = orangeColor;
                 gps.color = orangeColor;
                 slider.color = orangeColor;
+                HD.color = orangeColor;
                 avatarBorder.color = colorDarkeness(orangeColor);
                 camaraBorder.color = colorDarkeness(orangeColor);
                 circleBorder.color = colorDarkeness(orangeColor);
                 gpsBorder.color = colorDarkeness(orangeColor);
+                HDBorder.color = colorDarkeness(orangeColor);
                 FindAndInstantiate("avatarNaranja");
                 
                 break;
@@ -348,10 +361,12 @@ public class AirQualityCalculator : MonoBehaviour
                 camara.color = redColor;
                 gps.color = redColor;
                 slider.color = redColor;
+                HD.color = redColor;
                 avatarBorder.color = colorDarkeness(redColor);
                 camaraBorder.color = colorDarkeness(redColor);
                 circleBorder.color = colorDarkeness(redColor);
                 gpsBorder.color = colorDarkeness(redColor);
+                HDBorder.color = colorDarkeness(redColor);
                 FindAndInstantiate("avatarRojo");
                 break;
         }
