@@ -1,4 +1,22 @@
-# SoulAir
+# SoulAir: Experiencia Interactiva sobre la Calidad del Aire
+SoulAir es un sistema multimedia interactivo desarrollado en **Unity** como un proyecto académico para la materia de Diseño Multimedia 2 en la Universidad Autónoma de Occidente.
+El objetivo principal del proyecto es informar y sensibilizar a los usuarios sobre los niveles de calidad del aire en su entorno, específicamente en la ciudad de Cali, y educar sobre las medidas de protección contra materiales particulados como el PM 2.5 y PM 10
+
+### Características Principales
+
+**Mapa Interactivo:** Visualización en tiempo real de la calidad del aire (ICA) y focos de congestión vehicular. El mapa se renderiza utilizando **Mapbox SDK** y se alimenta de datos de la **HERE Traffic API** para el flujo de tráfico de **Firebase Firestore** para los niveles de ICA.
+**Avatar Reactivo:** Un personaje central en forma de nube, diseñado en 2D y 3D, cuya expresión y estado cambian dinámicamente según los niveles de contaminación reportados. Sirve como un indicador emocional y visual para el usuario.
+**Minijuego Educativo:** Un juego estilo *runner* en 3D donde el usuario controla al avatar en una bicicleta, esquivando obstáculos contaminantes y aprendiendo sobre hábitos saludables. El personaje fue modelado en **Blender** y animado con **Mixamo**.
+* [cite_start]**Herramienta de Reporte Ciudadano:** Funcionalidad que permite a los usuarios reportar incidentes que afectan la calidad del aire (incendios, construcciones, tráfico denso, etc.)[cite: 883, 884]. [cite_start]Los reportes son almacenados de forma segura en **Firebase Firestore**, con un sistema de cifrado para proteger la información del usuario.
+**Realidad Aumentada (AR):** Módulo que permite al usuario visualizar una representación del material particulado en su entorno cercano a través de la cámara del dispositivo.
+
+### Tecnologías Utilizadas
+
+**Motor de Desarrollo:** Unity 
+**Backend y Base de Datos:** Firebase (Authentication, Firestore)
+**APIs Externas:** Mapbox Maps SDK [cite: 528][cite_start], HERE Traffic API 
+**Herramientas de Diseño:** Inkscape, Blender, Mixamo, Adobe Illustrator, Figma.
+**Control de Versiones:** GitHub, Git LFS 
 
 
 
